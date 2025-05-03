@@ -1,32 +1,19 @@
-# Assignment Project
+# Directory Structure API
 
-This project implements a directory structure represented as a CSV file using Java 17 and Spring Boot. The application provides functionality to parse the directory structure, generate an indented tree representation, and classify files based on their sensitivity.
+The **Directory Structure API** is a Spring Boot application that provides functionality to parse a directory structure from a CSV file, generate an indented tree representation, and classify files based on their sensitivity (e.g., Top Secret, Secret, etc.).
 
-## Project Structure
+---
 
-```
-assignment-project/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── example/
-│   │   │           └── assignment/
-│   │   │               └── AssignmentApplication.java
-│   │   └── resources/
-│   │       └── application.properties
-│   └── test/
-│       ├── java/
-│       └── resources/
-├── build.gradle
-├── settings.gradle
-├── gradlew
-├── gradlew.bat
-├── gradle/
-│   └── wrapper/
-│       ├── gradle-wrapper.properties
-│       └── gradle-wrapper.jar
-```
+## Features
+
+- Parse directory structure data from a CSV file.
+- Generate an indented tree representation of the directory.
+- Retrieve the total size of public files.
+- List non-public files not located in a specific folder.
+- Filter files by classification (e.g., Secret, Top Secret).
+- Handle errors gracefully, including file not found, parsing errors, and internal service errors.
+
+---
 
 ## Setup Instructions
 
@@ -37,15 +24,14 @@ assignment-project/
    ```
 
 2. **Build the Project**
-   Use Maven to build the project:
-   ```
-   ./mvnw clean install
+    ```
+   gradlew build
    ```
 
 3. **Run the Application**
    Start the Spring Boot application:
    ```
-   ./mvnw spring-boot:run
+   gradlew bootRun
    ```
 
 ## Usage
@@ -56,11 +42,25 @@ assignment-project/
 
 ## Testing
 
-Unit tests are included for the `DirectoryService` and `ClassificationService` classes to ensure the functionality works as expected. Run the tests using:
+Unit tests are included for the `DirectoryService` and `DirectoryControllerIntegrationTest` classes to ensure the functionality works as expected. Run the tests using:
 ```
-./mvnw test
+gradle test
+gradle integrationTest
 ```
 
-## License
+## API Endpoints
+ ```
+ Get Directory Information
+ Endpoint: /api/directory/find
+ Method: GET
+ Query Parameters:
 
-This project is licensed under the MIT License.
+ operation (required): The type of operation to perform. Supported values:
+ tree: Returns the indented tree structure of the directory.
+ public-size: Returns the total size of public files.
+ non-public-folder11: Returns non-public files in folder 11.
+ secret-or-top-secret: Returns files classified as Secret or Top Secret.
+ files-by-classification: Returns files filtered by a specific classification type.
+ classificationType (optional): Required for files-by-classification.
+
+```
